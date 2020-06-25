@@ -1,22 +1,25 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-
+import { Meteor } from 'meteor/meteor';
+import React from 'react';
+import {
+  Route,
+  Router,
+  Switch
+} from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import { Home } from './pages/Home';
+import { createBrowserHistory } from 'history';
 import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
+const history = createBrowserHistory();
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
+window.browserHistory = history;
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+Meteor.startup(() => {
+  ReactDOM.render(
+    <Router  history={history}>
+      <Switch >
+        <Route exact path="/" component={Home} history={history}/>
+      </Switch>
+    </Router>, document.getElementById('render-target')
+  );
 });
