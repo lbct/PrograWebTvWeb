@@ -6,6 +6,7 @@ class Home extends Component {
         return(
             <>
                 <TopMenu></TopMenu>
+                <label>hola mundo</label>
             </>
         );
     }
